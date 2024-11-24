@@ -1,0 +1,22 @@
+{
+  "id": "breakout",
+  "isAudioSource": false,
+  "isScreenSaver": false,
+  "isWebApp": true,
+  "isLocalApp": false,
+  "requires": [],
+  "label": "Breakout",
+  "version": "0.9.1",
+  "version_code": "1.0",
+  "compatible_server": [],
+  "compatible_client": [],
+  "description": "This app is the game Breakout. Can be controlled with the knob or the touchscreen.",
+  "author": "EJ",
+  "platforms": [
+    "linux",
+    "windows",
+    "mac"
+  ],
+  "homepage": "",
+  "repository": "https://github.com/Ej747/breakout-thing"
+}
