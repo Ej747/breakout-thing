@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  background-color: #212121;
+}
+canvas {
+  background: #cdcdcd;
+  display: block;
+  margin: 0 auto;
+}
+button {
+  display: block;
+  color: #ffffff;
+  border-color: #dcdcdc;
+}
