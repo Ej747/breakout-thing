@@ -4,14 +4,14 @@ const ctx = canvas.getContext("2d");
 // ball location and parameters
 let x = canvas.width/2;
 let y = canvas.height-30;
-const dx1 = 3;
-const dy1 = -3;
+const dx1 = 4;
+const dy1 = -4;
 let dx = dx1;
 let dy = dy1;
 const ballRadius = 10;
 
 // paddle 
-let paddleWidth = 120;
+const paddleWidth = 100;
 const paddleHeight = 10;
 let paddleX = (canvas.width - paddleWidth) / 2;
 // control
@@ -19,15 +19,16 @@ let rightPressed = false;
 let leftPressed = false;
 
 // bricks
-const brickRowCount = 8;
-const brickColumnCount = 12;
-const brickWidth = 60;
-const brickHeight = 20;
-const brickPadding = 5;
-const brickOffsetTop = 30;
-const brickOffsetLeft = (canvas.width - (brickWidth * brickColumnCount) - (brickPadding * (brickColumnCount - 1))) / 2;
+const brickRowCount = 6;
+const brickColumnCount = 16; // can be 8, 10, or 16 (even divisibles of canvas.width)
+const brickWidth = canvas.width / brickColumnCount;
+const brickHeight = 15;
+const brickPadding = 0;
+const brickOffsetTop = 50;
+const brickOffsetLeft = 0;
 let bricks = [];
-brickColors = ["#ff0000", "#ff0000", "#ff9d00", "ff9d00", "#18cc00", "#18cc00", "#dbdb00", "#dbdb00"];
+brickColors = ["#e34242", "#d17321", "#a1642f", "#adb53f", "#3b9437", "#3f43ab"];
+
 
 for (let c = 0; c < brickColumnCount; c++) {
     bricks[c] = [];
@@ -37,7 +38,7 @@ for (let c = 0; c < brickColumnCount; c++) {
 }
 
 let score = 0;
-let lives = 3;
+let lives = 5;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -71,7 +72,7 @@ function mouseMoveHandler(e) {
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, 2*Math.PI);
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#ad4c4c";
     ctx.fill();
     ctx.closePath();
 }
@@ -79,7 +80,7 @@ function drawBall() {
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#00a6ff";
+    ctx.fillStyle = "#ad4c4c";
     ctx.fill();
     ctx.closePath();
 
@@ -109,12 +110,10 @@ function collisionDetection() {
             const b = bricks[c][r];
             if (b.status === 1) {
                 if (y - ballRadius <= b.y + brickHeight && y + ballRadius >= b.y && x >= b.x && x <= b.x + brickWidth) {
-                    dy = -dy;
                     b.status = 0;
                     score++;
                 }
                 if (x + ballRadius >= b.x && x - ballRadius <= b.x + brickWidth && y >= b.y && y <= b.y + brickHeight) {
-                    dx = -dx;
                     b.status = 0;
                     score++;
                 }
@@ -129,13 +128,13 @@ function collisionDetection() {
 
 function drawScore() {
     ctx.font = "16px Arial";
-    ctx.fillStyle = "#f0f0f0";
+    ctx.fillStyle = "#878787";
     ctx.fillText(`Score: ${score}`, 8, 20);
 }
 
 function drawLives() {
     ctx.font = "16px Arial";
-    ctx.fillStyle = "#f0f0f0";;
+    ctx.fillStyle = "#878787";;
     ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 
@@ -158,7 +157,6 @@ function draw() {
     // bounces the ball off the top wall
     if (y - ballRadius <= 0) {
         dy = -dy;
-        paddleWidth = 60;
     }
     // ends game if ball hits the bottom
     if (y + ballRadius >= canvas.height) {
